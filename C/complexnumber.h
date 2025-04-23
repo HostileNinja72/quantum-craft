@@ -2,6 +2,7 @@
 #define complexnumber_h
 
 #include <cmath> 
+#include <iostream>
 
 class ComplexNumber
 {
@@ -32,8 +33,11 @@ public:
     ComplexNumber operator*(const ComplexNumber& other) const;
     ComplexNumber operator/(const ComplexNumber& other) const;
 
+
+    
+
     ComplexNumber conjugate() const;
- 
+    friend std::ostream &operator<<(std::ostream &os, const ComplexNumber &c);
 };
 
 #endif

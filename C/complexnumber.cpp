@@ -2,8 +2,10 @@
 #include <stdexcept>
 #include <math.h>
 
+#include <iostream>
 
-ComplexNumber::ComplexNumber(double magnitude, double phase, bool isPolar=0)
+
+ComplexNumber::ComplexNumber(double magnitude, double phase, bool isPolar)
 {
     if (isPolar)
     {
@@ -86,6 +88,14 @@ ComplexNumber ComplexNumber::operator/(const ComplexNumber &other) const
 
 
 ComplexNumber ComplexNumber::conjugate() const
-{
+{   
     return ComplexNumber(real_, -imag_);
+}
+
+std::ostream &operator<<(std::ostream &os, const ComplexNumber &c)
+{
+    os << c.getReal();
+    if (c.getImag() != 0)
+        os << (c.getImag() > 0 ? " + " : " - ") << std::abs(c.getImag()) << "i";
+    return os;
 }
