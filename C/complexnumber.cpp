@@ -1,9 +1,9 @@
 #include "complexnumber.h"
 #include <stdexcept>
 #include <math.h>
-
+#include <sstream> 
 #include <iostream>
-
+#include <regex>
 
 ComplexNumber::ComplexNumber(double magnitude, double phase, bool isPolar)
 {
@@ -20,6 +20,53 @@ ComplexNumber::ComplexNumber(double magnitude, double phase, bool isPolar)
         updatePolar();
     }
 }
+
+ComplexNumber::ComplexNumber(const char *str) : ComplexNumber(std::string(str)) {}
+
+ComplexNumber::ComplexNumber(const std::string &str)
+{
+    real_ = 0;
+    imag_ = 0;
+
+
+
+    std::string cleaned;
+    for (char c : str)
+    {
+        if (!std::isspace(c))
+        {
+            cleaned += c;
+        }
+    }
+
+    static const std::regex full_complex(R"(^([-+]?\d*\.?\d+)([-+]\d*\.?\d+)i$)");
+    static const std::regex pure_real(R"(^([-+]?\d*\.?\d+)$)");
+    static const std::regex pure_imag(R"(^([-+]?\d*\.?\d+)i$)");
+
+    std::smatch match;
+    if (std::regex_match(cleaned, match, full_complex))
+    {
+        real_ = std::stod(match[1]);
+        imag_ = std::stod(match[2]);
+    }
+    else if (std::regex_match(cleaned, match, pure_real))
+    {
+        real_ = std::stod(match[1]);
+        imag_ = 0;
+    }
+    else if (std::regex_match(cleaned, match, pure_imag))
+    {
+        real_ = 0;
+        imag_ = std::stod(match[1]);
+    }
+    else
+    {
+        throw std::invalid_argument("Invalid complex number format: " + str);
+    }
+
+    updatePolar();
+}
+
 double ComplexNumber::getReal() const
 {
     return real_;

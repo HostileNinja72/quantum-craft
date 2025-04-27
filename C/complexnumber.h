@@ -3,6 +3,7 @@
 
 #include <cmath> 
 #include <iostream>
+#include <string>
 
 class ComplexNumber
 {
@@ -18,6 +19,8 @@ private:
 
 public:
     ComplexNumber(double magnitude, double phase, bool isPolar=0);
+    ComplexNumber(const std::string &str);
+    ComplexNumber(const char *str);
 
     double getReal() const;
     double getImag() const;

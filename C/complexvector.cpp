@@ -6,6 +6,7 @@
 ComplexVector::ComplexVector(const std::vector<ComplexNumber>& elements) : elements(elements) {}
 
 
+
 int ComplexVector::size() const {
     return elements.size();
 }
@@ -76,3 +77,4 @@ std::ostream& operator<<(std::ostream& os, const ComplexVector& vec) {
     os << "]";
     return os;
 }
+
